@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import { PlatformType, Message, Participant } from '@/lib/types';
-import { SidebarHeader } from './sidebar-sections/sidebar-header';
+import { PlatformType, Message, Participant, ReplicationMode, Post } from '@/lib/types';
 import { SidebarConfiguration } from './sidebar-sections/sidebar-configuration';
 import { SidebarParticipants } from './sidebar-sections/sidebar-participants';
 import { SidebarTimeline } from './sidebar-sections/sidebar-timeline';
 import { Download, SlidersHorizontal, History } from 'lucide-react';
 import { Button } from '@/components/ui/design-system';
+import { SidebarEngagements } from './sidebar-sections/sidebar-engagements';
 
 interface RightSidebarProps {
   currentPlatform: PlatformType;
@@ -20,6 +20,9 @@ interface RightSidebarProps {
   onRemoveMessage: (id: string) => void;
   onReorderMessages: (newOrder: Message[]) => void;
   onExport: () => void;
+  mode: ReplicationMode;
+  post: Post;
+  onUpdatePost: (post: Post) => void;
 }
 
 export const RightSidebar: React.FC<RightSidebarProps> = ({
@@ -32,7 +35,10 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
   messages,
   onRemoveMessage,
   onReorderMessages,
-  onExport
+  onExport,
+  mode,
+  post,
+  onUpdatePost
 }) => {
   const [activeTab, setActiveTab] = React.useState<'config' | 'history'>('config');
 
@@ -63,6 +69,14 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
                   currentPlatform={currentPlatform}
                   onPlatformChange={onPlatformChange}
                />
+
+               {mode === 'post' && (
+                 <SidebarEngagements 
+                   post={post}
+                   onUpdatePost={onUpdatePost}
+                 />
+               )}
+
                <SidebarParticipants 
                   participants={participants}
                   onAddParticipant={onAddParticipant}
@@ -80,12 +94,20 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
 
           {activeTab === 'history' && (
             <div className="h-full flex flex-col animate-in fade-in duration-300">
-               <SidebarTimeline 
-                  messages={messages}
-                  participants={participants}
-                  onRemoveMessage={onRemoveMessage}
-                  onReorderMessages={onReorderMessages}
-               />
+               {mode === 'chat' ? (
+                 <SidebarTimeline 
+                    messages={messages}
+                    participants={participants}
+                    onRemoveMessage={onRemoveMessage}
+                    onReorderMessages={onReorderMessages}
+                 />
+               ) : (
+                 <div className="flex flex-col items-center justify-center h-full text-center space-y-2 opacity-50 p-8">
+                    <History className="w-8 h-8 text-neutral-300" />
+                    <p className="text-sm font-medium">No History for Posts</p>
+                    <p className="text-xs">Post replication is currently single-instance.</p>
+                 </div>
+               )}
             </div>
           )}
        </div>
