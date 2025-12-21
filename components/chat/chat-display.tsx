@@ -2,10 +2,9 @@
 
 import React from 'react';
 import { Message, Participant, PlatformConfig } from '@/lib/types';
-import { ChatMessage } from './chat-message';
+import { PlatformHeader, PlatformFooter, PlatformMessage } from './platform-layouts';
 import { ChatContainer } from './chat-container';
 import { PlatformTheme } from './platform-theme';
-import { PlatformHeader, PlatformFooter } from './platform-layouts';
 
 interface ChatDisplayProps {
   messages: Message[];
@@ -39,7 +38,7 @@ export const ChatDisplay: React.FC<ChatDisplayProps> = ({
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto py-4 px-2 scrollbar-thin scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-600">
+          <div className="flex-1 overflow-y-auto py-4 scrollbar-thin scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-600">
             <div className="flex flex-col">
               {messages.map((msg, index) => {
                 const prevMsg = messages[index - 1];
@@ -48,11 +47,12 @@ export const ChatDisplay: React.FC<ChatDisplayProps> = ({
                 const isLast = !nextMsg || nextMsg.senderId !== msg.senderId;
                 
                 return (
-                  <ChatMessage 
+                  <PlatformMessage 
                     key={msg.id} 
                     message={msg} 
                     sender={getSender(msg.senderId)} 
                     platform={platformConfig.id}
+                    config={platformConfig}
                     isFirst={isFirst}
                     isLast={isLast}
                   />

@@ -7,7 +7,7 @@ import { Participant } from '@/lib/types';
 
 interface SidebarComposeProps {
   participants: Participant[];
-  onAddMessage: (text: string, senderId: string, timestamp?: string) => void;
+  onAddMessage: (text: string, senderId: string, timestamp?: string, type?: "text" | "image", attachmentUrl?: string) => void;
   selectedSender: string;
   setSelectedSender: (id: string) => void;
 }
@@ -19,10 +19,11 @@ export const SidebarCompose: React.FC<SidebarComposeProps> = ({
   setSelectedSender,
 }) => {
   const [newMessage, setNewMessage] = React.useState('');
+  const [attachmentUrl, setAttachmentUrl] = React.useState('');
   const [customTime, setCustomTime] = React.useState('');
 
   const handleAdd = () => {
-    if (newMessage.trim()) {
+    if (newMessage.trim() || attachmentUrl.trim()) {
       let formattedTime = undefined;
       if (customTime) {
          const date = new Date(customTime);
@@ -36,8 +37,15 @@ export const SidebarCompose: React.FC<SidebarComposeProps> = ({
          }
       }
 
-      onAddMessage(newMessage, selectedSender, formattedTime);
+      onAddMessage(
+        newMessage, 
+        selectedSender, 
+        formattedTime, 
+        attachmentUrl.trim() ? 'image' : 'text', 
+        attachmentUrl.trim() || undefined
+      );
       setNewMessage('');
+      setAttachmentUrl('');
     }
   };
 
@@ -63,6 +71,15 @@ export const SidebarCompose: React.FC<SidebarComposeProps> = ({
                 className="text-[10px]"
               />
            </div>
+         </div>
+         <div>
+            <Label>Attachment URL (Optional)</Label>
+            <Input 
+              type="text" 
+              placeholder="https://example.com/image.png"
+              value={attachmentUrl}
+              onChange={(e) => setAttachmentUrl(e.target.value)}
+            />
          </div>
          <div>
            <Label>Message</Label>
