@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronLeft, MoreHorizontal, Video, ShieldCheck, Heart } from 'lucide-react';
+import { ChevronLeft, ShieldCheck, Heart } from 'lucide-react';
 import { PlatformLayoutProps, PlatformMessageProps } from '@/lib/types';
 import { cn } from '@/lib/utils';
 

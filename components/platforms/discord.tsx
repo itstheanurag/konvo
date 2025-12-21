@@ -1,5 +1,5 @@
 import React from 'react';
-import { PhoneCall, Video as VideoIcon, Search, Plus, Gift, Sticker, Smile, ArrowLeft, Video, Phone, MoreVertical, Image as ImageIcon, Camera, Mic, UserPlus } from 'lucide-react';
+import { PhoneCall, Video as VideoIcon, Search, Plus, Gift, Sticker, Smile, Image } from 'lucide-react';
 import { PlatformLayoutProps, PlatformMessageProps } from '@/lib/types';
 import { cn } from '@/lib/utils';
 

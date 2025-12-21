@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Video, Phone, MoreVertical, Smile, Image as ImageIcon, Camera, Mic, ChevronLeft, Plus } from 'lucide-react';
+import { ArrowLeft, Camera, Mic, ChevronLeft, Plus } from 'lucide-react';
 import { PlatformLayoutProps, PlatformMessageProps } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
