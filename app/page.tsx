@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
-import { PLATFORMS, PlatformType, Message, Participant } from '@/lib/types';
+import { PLATFORMS, PlatformType, Message, Participant, ReplicationMode, Post } from '@/lib/types';
 import { Sidebar } from '@/components/editor/sidebar';
 import { RightSidebar } from '@/components/editor/right-sidebar';
 import { ChatDisplay } from '@/components/chat/chat-display';
 import { toPng } from 'html-to-image';
+import { PostDisplay } from '@/components/chat/post-display';
 
 const INITIAL_PARTICIPANTS: Participant[] = [
   { id: '1', name: 'Gaurav', username: 'gaurav', isMe: true },
@@ -19,8 +20,22 @@ const INITIAL_MESSAGES: Message[] = [
 
 export default function Home() {
   const [platform, setPlatform] = React.useState<PlatformType>('whatsapp');
+  const [mode, setMode] = React.useState<ReplicationMode>('chat');
   const [messages, setMessages] = React.useState<Message[]>(INITIAL_MESSAGES);
   const [participants, setParticipants] = React.useState<Participant[]>(INITIAL_PARTICIPANTS);
+  const [post, setPost] = React.useState<Post>({
+    id: 'p1',
+    authorId: '1',
+    content: 'Just launched Konvo! Replicate any chat or post with ease. #buildinpublic #saas',
+    timestamp: '2h',
+    engagements: {
+      likes: 124,
+      comments: 12,
+      reposts: 5,
+      views: 1200,
+    }
+  });
+
   const chatRef = React.useRef<HTMLDivElement>(null);
 
   const handleAddMessage = (text: string, senderId: string, timestamp?: string, type: "text" | "image" = 'text', attachmentUrl?: string) => {
@@ -55,6 +70,10 @@ export default function Home() {
      setMessages(newOrder);
   };
 
+  const handleUpdatePost = (updatedPost: Post) => {
+    setPost(updatedPost);
+  };
+
   const handleExport = async () => {
     if (chatRef.current === null) {
       return;
@@ -66,7 +85,7 @@ export default function Home() {
         backgroundColor: 'transparent',
       });
       const link = document.createElement('a');
-      link.download = `konvo-${platform}-${Date.now()}.png`;
+      link.download = `konvo-${platform}-${mode}-${Date.now()}.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {
@@ -83,17 +102,30 @@ export default function Home() {
         participants={participants}
         messages={messages}
         onAddMessage={handleAddMessage}
+        mode={mode}
+        onModeChange={setMode}
+        post={post}
+        onUpdatePost={handleUpdatePost}
       />
       
       {/* CENTER: Canvas */}
       <main className="flex-1 relative flex flex-col items-center justify-center p-8 bg-neutral-50 dark:bg-[#09090b] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px]">
         <div ref={chatRef} className="relative z-10 animate-in fade-in zoom-in duration-500">
-           <ChatDisplay 
-             messages={messages}
-             participants={participants}
-             platformConfig={PLATFORMS[platform]}
-             view="phone"
-           />
+          {mode === 'chat' ? (
+             <ChatDisplay 
+               messages={messages}
+               participants={participants}
+               platformConfig={PLATFORMS[platform]}
+               view="phone"
+             />
+          ) : (
+            <PostDisplay 
+              post={post}
+              participants={participants}
+              platformConfig={PLATFORMS[platform]}
+              view="phone"
+            />
+          )}
         </div>
         
         <div className="absolute bottom-6 text-center pointer-events-none opacity-50">
@@ -115,6 +147,9 @@ export default function Home() {
         onRemoveMessage={handleRemoveMessage}
         onReorderMessages={handleReorderMessages}
         onExport={handleExport}
+        mode={mode}
+        post={post}
+        onUpdatePost={handleUpdatePost}
       />
 
     </div>

@@ -9,7 +9,10 @@ export type PlatformType =
   | "tumblr"
   | "peerlist"
   | "slack"
-  | "telegram";
+  | "telegram"
+  | "linkedin";
+
+export type ReplicationMode = "chat" | "post";
 
 export interface Participant {
   id: string;
@@ -30,6 +33,20 @@ export interface Message {
   isRead?: boolean;
 }
 
+export interface Post {
+  id: string;
+  authorId: string;
+  content: string;
+  images?: string[];
+  timestamp: string;
+  engagements: {
+    likes: number;
+    comments: number;
+    reposts?: number;
+    views?: number;
+  };
+}
+
 export interface PlatformConfig {
   id: PlatformType;
   name: string;
@@ -42,6 +59,7 @@ export interface PlatformConfig {
   fontFamily: string;
   showAvatars: boolean;
   showUsernames: boolean;
+  supportsPosts?: boolean;
 }
 
 export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
@@ -85,6 +103,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     showAvatars: true,
     showUsernames: true,
+    supportsPosts: true,
   },
   x: {
     id: "x",
@@ -99,6 +118,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       'TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     showAvatars: true,
     showUsernames: true,
+    supportsPosts: true,
   },
   reddit: {
     id: "reddit",
@@ -194,6 +214,21 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
     showAvatars: false,
     showUsernames: false,
+  },
+  linkedin: {
+    id: "linkedin",
+    name: "LinkedIn",
+    bgColor: "#f3f2f0",
+    headerColor: "#ffffff",
+    bubbleColorRecipient: "#ffffff",
+    bubbleColorSender: "#ffffff",
+    textColorRecipient: "#000000",
+    textColorSender: "#000000",
+    fontFamily:
+      "-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif",
+    showAvatars: true,
+    showUsernames: true,
+    supportsPosts: true,
   },
 };
 

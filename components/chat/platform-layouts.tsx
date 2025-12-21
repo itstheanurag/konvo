@@ -3,14 +3,19 @@
 import React from 'react';
 import { PlatformLayoutProps, PlatformMessageProps } from '@/lib/types';
 import { SlackHeader, SlackFooter, SlackMessage } from '@/components/platforms/slack';
-import { TelegramHeader, TelegramFooter, TelegramMessage } from '@/components/platforms/telegram';
-import { WhatsAppHeader, WhatsAppFooter, WhatsAppMessage } from '@/components/platforms/whatsapp';
+import { TelegramHeader, TelegramFooter } from '@/components/platforms/telegram/telegram';
+import { TelegramMessage } from '@/components/platforms/telegram/messages';
+import { WhatsAppHeader, WhatsAppFooter } from '@/components/platforms/whatsapp/whatsapp';
+import { WhatsAppMessage } from '@/components/platforms/whatsapp/messages';
 import { MessagesHeader, MessagesFooter, MessagesMessage } from '@/components/platforms/messages';
-import { InstagramHeader, InstagramFooter, InstagramMessage } from '@/components/platforms/instagram';
+import { InstagramHeader, InstagramFooter } from '@/components/platforms/instagram/instagram';
+import { InstagramMessage } from '@/components/platforms/instagram/messages';
 import { DiscordHeader, DiscordFooter, DiscordMessage } from '@/components/platforms/discord';
-import { XHeader, XMessage } from '@/components/platforms/x';
+import { XHeader } from '@/components/platforms/x/x';
+import { XMessage } from '@/components/platforms/x/messages';
 import { TumblrHeader, TumblrFooter, TumblrMessage } from '@/components/platforms/tumbler';
-import { PeerlistHeader, PeerlistFooter, PeerlistMessage } from '@/components/platforms/peerlist';
+import { PeerlistHeader, PeerlistFooter } from '@/components/platforms/peerlist/peerlist';
+import { PeerlistMessage } from '@/components/platforms/peerlist/messages';
 import { HingeHeader, HingeFooter, HingeMessage } from '@/components/platforms/hinge';
 import { GenericHeader, GenericFooter, GenericMessage } from '@/components/platforms/generic';
 
