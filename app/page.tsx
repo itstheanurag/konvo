@@ -5,6 +5,7 @@ import { PLATFORMS, PlatformType, Message, Participant } from '@/lib/types';
 import { Sidebar } from '@/components/editor/sidebar';
 import { RightSidebar } from '@/components/editor/right-sidebar';
 import { ChatDisplay } from '@/components/chat/chat-display';
+import { toPng } from 'html-to-image';
 
 const INITIAL_PARTICIPANTS: Participant[] = [
   { id: '1', name: 'Gaurav', username: 'gaurav', isMe: true },
@@ -20,14 +21,16 @@ export default function Home() {
   const [platform, setPlatform] = React.useState<PlatformType>('whatsapp');
   const [messages, setMessages] = React.useState<Message[]>(INITIAL_MESSAGES);
   const [participants, setParticipants] = React.useState<Participant[]>(INITIAL_PARTICIPANTS);
+  const chatRef = React.useRef<HTMLDivElement>(null);
 
-  const handleAddMessage = (text: string, senderId: string, timestamp?: string) => {
+  const handleAddMessage = (text: string, senderId: string, timestamp?: string, type: "text" | "image" = 'text', attachmentUrl?: string) => {
     const newMessage: Message = {
       id: Math.random().toString(36).substr(2, 9),
       senderId,
       text,
       timestamp: timestamp || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      type: 'text',
+      type,
+      attachmentUrl,
     };
     setMessages([...messages, newMessage]);
   };
@@ -52,8 +55,24 @@ export default function Home() {
      setMessages(newOrder);
   };
 
-  const handleExport = () => {
-    alert('Export functionality coming soon!');
+  const handleExport = async () => {
+    if (chatRef.current === null) {
+      return;
+    }
+
+    try {
+      const dataUrl = await toPng(chatRef.current, {
+        cacheBust: true,
+        backgroundColor: 'transparent',
+      });
+      const link = document.createElement('a');
+      link.download = `konvo-${platform}-${Date.now()}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error('oops, something went wrong!', err);
+      alert('Failed to export image. Please try again.');
+    }
   };
 
   return (
@@ -68,7 +87,7 @@ export default function Home() {
       
       {/* CENTER: Canvas */}
       <main className="flex-1 relative flex flex-col items-center justify-center p-8 bg-neutral-50 dark:bg-[#09090b] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px]">
-        <div className="relative z-10 animate-in fade-in zoom-in duration-500">
+        <div ref={chatRef} className="relative z-10 animate-in fade-in zoom-in duration-500">
            <ChatDisplay 
              messages={messages}
              participants={participants}

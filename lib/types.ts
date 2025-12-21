@@ -7,7 +7,9 @@ export type PlatformType =
   | "whatsapp"
   | "discord"
   | "tumblr"
-  | "peerlist";
+  | "peerlist"
+  | "slack"
+  | "telegram";
 
 export interface Participant {
   id: string;
@@ -165,11 +167,46 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
     showAvatars: true,
     showUsernames: true,
   },
+  slack: {
+    id: "slack",
+    name: "Slack",
+    bgColor: "#ffffff",
+    headerColor: "#ffffff",
+    bubbleColorRecipient: "transparent",
+    bubbleColorSender: "transparent",
+    textColorRecipient: "#1d1c1d",
+    textColorSender: "#1d1c1d",
+    fontFamily:
+      "Lato, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    showAvatars: true,
+    showUsernames: true,
+  },
+  telegram: {
+    id: "telegram",
+    name: "Telegram",
+    bgColor: "#7195ba", // Classic Telegram blue/gray background
+    headerColor: "#517da2",
+    bubbleColorRecipient: "#ffffff",
+    bubbleColorSender: "#effdde",
+    textColorRecipient: "#000000",
+    textColorSender: "#000000",
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    showAvatars: false,
+    showUsernames: false,
+  },
 };
-
 
 export interface PlatformLayoutProps {
   platform: PlatformType;
   config: PlatformConfig;
   participants: Participant[];
+}
+
+export interface PlatformMessageProps {
+  message: Message;
+  sender: Participant;
+  isFirst: boolean;
+  isLast: boolean;
+  config: PlatformConfig;
 }
