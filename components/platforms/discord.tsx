@@ -1,6 +1,7 @@
 import React from 'react';
-import { PhoneCall, Video as VideoIcon, Search, Plus, Gift, Sticker, Smile } from 'lucide-react';
-import { PlatformLayoutProps } from '@/lib/types';
+import { PhoneCall, Video as VideoIcon, Search, Plus, Gift, Sticker, Smile, ArrowLeft, Video, Phone, MoreVertical, Image as ImageIcon, Camera, Mic, UserPlus } from 'lucide-react';
+import { PlatformLayoutProps, PlatformMessageProps } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 export const DiscordHeader: React.FC<PlatformLayoutProps> = ({ config, participants }) => {
   const otherUser = participants.find(p => !p.isMe) || participants[0];
@@ -31,5 +32,42 @@ export const DiscordFooter: React.FC<PlatformLayoutProps> = ({ config }) => {
             <Smile className="w-4 h-4 text-[#b5bac1]" />
          </div>
       </div>
+   );
+};
+
+export const DiscordMessage: React.FC<PlatformMessageProps> = ({ message, sender, isFirst }) => {
+   return (
+     <div className={cn(
+       "flex w-full px-4 gap-3 group hover:bg-neutral-800/20",
+       isFirst ? "mt-4" : "mt-0.5"
+     )}>
+        <div className="w-10 h-10 flex-shrink-0">
+           {isFirst ? (
+              <div className="w-full h-full rounded-full bg-neutral-300 overflow-hidden">
+                 {sender.avatar && <img src={sender.avatar} className="w-full h-full object-cover" />}
+              </div>
+           ) : (
+              <div className="w-full flex items-center justify-center opacity-0 group-hover:opacity-100 text-[10px] text-neutral-400 mt-2">
+                 {message.timestamp.split(':')[0]}
+              </div>
+           )}
+        </div>
+        <div className="flex-1 flex flex-col -mt-0.5 min-w-0">
+           {isFirst && (
+              <div className="flex items-baseline gap-2">
+                 <span className="font-medium text-[16px] text-white hover:underline cursor-pointer leading-none">{sender.name}</span>
+                 <span className="text-[12px] text-neutral-400 leading-none">{message.timestamp}</span>
+              </div>
+           )}
+           <div className="text-[16px] text-[#dbdee1] leading-[1.375rem] font-normal">
+              {message.type === 'image' && message.attachmentUrl && (
+                <div className="my-2 rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900 max-w-[85%]">
+                   <img src={message.attachmentUrl} alt="Discord Attachment" className="w-full h-auto max-h-[500px] object-contain" />
+                </div>
+              )}
+              <p className="whitespace-pre-wrap break-words">{message.text}</p>
+           </div>
+        </div>
+     </div>
    );
 };
