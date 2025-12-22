@@ -29,6 +29,11 @@ export const XMessage: React.FC<PlatformMessageProps> = ({ message, sender, isFi
                   <img src={message.attachmentUrl} alt="Attachment" className="w-full h-auto max-h-[300px] object-contain" />
                </div>
              )}
+             {message.type === 'video' && message.attachmentUrl && (
+               <div className="mb-2 -mx-2 -mt-1 rounded-xl overflow-hidden border border-white/10 bg-black/20 flex items-center justify-center">
+                  <video src={message.attachmentUrl} controls className="w-full h-auto max-h-[300px]" />
+               </div>
+             )}
              <p className="whitespace-pre-wrap break-words">{message.text}</p>
           </div>
           {isLast && (

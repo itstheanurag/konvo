@@ -48,11 +48,16 @@ export const TumblrMessage: React.FC<PlatformMessageProps> = ({ message, sender 
           </div>
        </div>
        <div className="text-[14.5px] leading-[1.4] font-normal">
-          {message.type === 'image' && message.attachmentUrl && (
-            <div className="mb-3 -mx-3 -mt-2 border-b border-[#ffffff1a] overflow-hidden">
-               <img src={message.attachmentUrl} alt="Tumblr Attachment" className="w-full h-auto max-h-[500px] object-contain" />
-            </div>
-          )}
+           {message.type === 'image' && message.attachmentUrl && (
+             <div className="mb-3 -mx-3 -mt-2 border-b border-[#ffffff1a] overflow-hidden">
+                <img src={message.attachmentUrl} alt="Tumblr Attachment" className="w-full h-auto max-h-[500px] object-contain" />
+             </div>
+           )}
+           {message.type === 'video' && message.attachmentUrl && (
+             <div className="mb-3 -mx-3 -mt-2 border-b border-[#ffffff1a] overflow-hidden bg-black/20 flex items-center justify-center">
+                <video src={message.attachmentUrl} controls className="w-full h-auto max-h-[500px]" />
+             </div>
+           )}
           <div className="px-1">
              <p className="whitespace-pre-wrap break-words">{message.text}</p>
           </div>

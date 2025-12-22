@@ -22,11 +22,16 @@ export const PeerlistMessage: React.FC<PlatformMessageProps> = ({ message, sende
               </div>
            )}
            <div className="text-[14.5px] leading-[1.5] text-neutral-800 tracking-tight font-normal">
-              {message.type === 'image' && message.attachmentUrl && (
-                 <div className="my-2 rounded-xl border border-neutral-200 overflow-hidden max-w-[85%] shadow-sm">
-                    <img src={message.attachmentUrl} alt="Peerlist attachment" className="w-full h-auto max-h-[400px] object-contain" />
-                 </div>
-              )}
+               {message.type === 'image' && message.attachmentUrl && (
+                  <div className="my-2 rounded-xl border border-neutral-200 overflow-hidden max-w-[85%] shadow-sm">
+                     <img src={message.attachmentUrl} alt="Peerlist attachment" className="w-full h-auto max-h-[400px] object-contain" />
+                  </div>
+               )}
+               {message.type === 'video' && message.attachmentUrl && (
+                  <div className="my-2 rounded-xl border border-neutral-200 overflow-hidden max-w-[85%] shadow-sm bg-black/5 flex items-center justify-center">
+                     <video src={message.attachmentUrl} controls className="w-full h-auto max-h-[400px]" />
+                  </div>
+               )}
               <p className="whitespace-pre-wrap break-words">{message.text}</p>
            </div>
         </div>

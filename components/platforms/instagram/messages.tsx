@@ -24,6 +24,11 @@ export const InstagramMessage: React.FC<PlatformMessageProps> = ({ message, send
               <img src={message.attachmentUrl} alt="Instagram attachment" className="w-full h-auto max-h-[400px] object-contain" />
            </div>
          )}
+         {message.type === 'video' && message.attachmentUrl && (
+            <div className="mb-1.5 -mx-3.5 -mt-2 rounded-t-[22px] overflow-hidden border-b border-black/5 bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
+               <video src={message.attachmentUrl} controls className="w-full h-auto max-h-[400px]" />
+            </div>
+         )}
          <p className="whitespace-pre-wrap break-words font-normal">{message.text}</p>
       </div>
     </div>

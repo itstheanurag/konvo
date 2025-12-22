@@ -29,6 +29,11 @@ export const WhatsAppMessage: React.FC<PlatformMessageProps> = ({ message, sende
                <img src={message.attachmentUrl} alt="Attachment" className="max-w-full h-auto object-contain max-h-[400px]" />
             </div>
           )}
+          {message.type === 'video' && message.attachmentUrl && (
+            <div className="mb-1 -mx-1 -mt-1 rounded-t-lg overflow-hidden border-b border-black/5 bg-black/5 flex items-center justify-center">
+               <video src={message.attachmentUrl} controls className="max-w-full h-auto max-h-[400px]" />
+            </div>
+          )}
           <p className="text-[14.2px] leading-[1.3] text-neutral-900 whitespace-pre-wrap break-words font-normal">{message.text}</p>
           <div className="flex items-center justify-end gap-1 mt-0.5">
             <span className="text-[10px] text-neutral-500">{message.timestamp}</span>

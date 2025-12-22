@@ -91,11 +91,16 @@ export const SlackMessage: React.FC<PlatformMessageProps> = ({ message, sender, 
              </div>
           )}
           <div className="text-[15px] text-neutral-800 dark:text-neutral-200 leading-[1.46] tracking-tight">
-             {message.type === 'image' && message.attachmentUrl && (
-               <div className="my-2 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden max-w-[360px] shadow-sm">
-                  <img src={message.attachmentUrl} alt="Slack Attachment" className="w-full h-auto max-h-[500px] object-contain" />
-               </div>
-             )}
+              {message.type === 'image' && message.attachmentUrl && (
+                <div className="my-2 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden max-w-[360px] shadow-sm">
+                   <img src={message.attachmentUrl} alt="Slack Attachment" className="w-full h-auto max-h-[500px] object-contain" />
+                </div>
+              )}
+              {message.type === 'video' && message.attachmentUrl && (
+                <div className="my-2 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden max-w-[360px] shadow-sm bg-black/5 flex items-center justify-center">
+                   <video src={message.attachmentUrl} controls className="w-full h-auto max-h-[500px]" />
+                </div>
+              )}
              <p className="whitespace-pre-wrap break-words font-normal">{message.text}</p>
           </div>
        </div>

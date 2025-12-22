@@ -19,6 +19,11 @@ export const TelegramMessage: React.FC<PlatformMessageProps> = ({ message, sende
                  <img src={message.attachmentUrl} alt="Telegram attachment" className="w-full h-auto object-contain max-h-[400px]" />
               </div>
             )}
+            {message.type === 'video' && message.attachmentUrl && (
+              <div className="mb-1.5 -mx-3 -mt-1.5 rounded-t-[18px] overflow-hidden bg-black/5 flex items-center justify-center">
+                 <video src={message.attachmentUrl} controls className="w-full h-auto max-h-[400px]" />
+              </div>
+            )}
             <p className="text-[15px] leading-[1.35] text-neutral-900 whitespace-pre-wrap break-words font-normal">{message.text}</p>
             <div className="flex items-center justify-end gap-1 -mt-0.5 h-4 self-end">
                <span className="text-[10px] text-[#7195ba] font-medium">{message.timestamp.split(' ').pop()}</span>

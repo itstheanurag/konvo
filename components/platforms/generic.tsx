@@ -53,6 +53,11 @@ export const GenericMessage: React.FC<PlatformMessageProps> = ({ message, sender
              <img src={message.attachmentUrl} alt="Attached" className="max-w-full h-auto" />
           </div>
         )}
+        {message.type === 'video' && message.attachmentUrl && (
+          <div className="mb-2 rounded-lg overflow-hidden border border-black/5">
+             <video src={message.attachmentUrl} controls className="max-w-full h-auto" />
+          </div>
+        )}
         <p className="text-[14px] whitespace-pre-wrap break-words leading-tight">{message.text}</p>
         <div className="mt-1 flex justify-end">
            <span className="text-[9px] opacity-70">{message.timestamp}</span>

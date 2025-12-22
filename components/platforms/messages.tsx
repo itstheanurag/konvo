@@ -60,6 +60,11 @@ export const MessagesMessage: React.FC<PlatformMessageProps> = ({ message, sende
                <img src={message.attachmentUrl} alt="iMessage attachment" className="w-full h-auto max-h-[400px] object-contain" />
             </div>
          )}
+         {message.type === 'video' && message.attachmentUrl && (
+            <div className="mb-1.5 -mx-3.5 -mt-2.5 rounded-t-[20px] overflow-hidden border-b border-black/5 bg-black/5 flex items-center justify-center">
+               <video src={message.attachmentUrl} controls className="w-full h-auto max-h-[400px]" />
+            </div>
+         )}
          <p className="whitespace-pre-wrap break-words font-normal">{message.text}</p>
       </div>
     </div>

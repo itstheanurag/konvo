@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Post, Participant, PlatformConfig } from '@/lib/types';
+import { cn } from '@/lib/utils';
 import { MessageCircle, Heart, Repeat2, Share, MoreHorizontal, BarChart2 } from 'lucide-react';
 
 interface XPostProps {
@@ -68,9 +69,15 @@ export const XPost: React.FC<XPostProps> = ({ post, author, config }) => {
           </div>
           <span className="text-[13px]">{formatNumber(post.engagements.reposts || 0)}</span>
         </div>
-        <div className="flex items-center gap-1 group cursor-pointer hover:text-pink-500 transition-colors">
-          <div className="p-2 rounded-full group-hover:bg-pink-500/10">
-            <Heart className="w-[18px] h-[18px]" />
+        <div className={cn(
+          "flex items-center gap-1 group cursor-pointer transition-colors",
+          post.isLiked ? "text-pink-500" : "hover:text-pink-500"
+        )}>
+          <div className={cn(
+            "p-2 rounded-full",
+            post.isLiked ? "bg-pink-500/10" : "group-hover:bg-pink-500/10"
+          )}>
+            <Heart className={cn("w-[18px] h-[18px]", post.isLiked && "fill-current")} />
           </div>
           <span className="text-[13px]">{formatNumber(post.engagements.likes)}</span>
         </div>

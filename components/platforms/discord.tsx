@@ -60,11 +60,16 @@ export const DiscordMessage: React.FC<PlatformMessageProps> = ({ message, sender
               </div>
            )}
            <div className="text-[16px] text-[#dbdee1] leading-[1.375rem] font-normal">
-              {message.type === 'image' && message.attachmentUrl && (
-                <div className="my-2 rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900 max-w-[85%]">
-                   <img src={message.attachmentUrl} alt="Discord Attachment" className="w-full h-auto max-h-[500px] object-contain" />
-                </div>
-              )}
+               {message.type === 'image' && message.attachmentUrl && (
+                 <div className="my-2 rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900 max-w-[85%]">
+                    <img src={message.attachmentUrl} alt="Discord Attachment" className="w-full h-auto max-h-[500px] object-contain" />
+                 </div>
+               )}
+               {message.type === 'video' && message.attachmentUrl && (
+                 <div className="my-2 rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900 max-w-[85%] flex items-center justify-center">
+                    <video src={message.attachmentUrl} controls className="w-full h-auto max-h-[500px]" />
+                 </div>
+               )}
               <p className="whitespace-pre-wrap break-words">{message.text}</p>
            </div>
         </div>

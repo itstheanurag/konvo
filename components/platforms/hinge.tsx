@@ -43,11 +43,16 @@ export const HingeMessage: React.FC<PlatformMessageProps> = ({ message, sender }
            "relative max-w-[80%] px-4 py-3 rounded-[20px] font-serif text-[16px] leading-[1.3] shadow-sm",
            isMe ? "bg-[#333] text-white" : "bg-white border border-neutral-200 text-neutral-900"
         )}>
-           {message.type === 'image' && message.attachmentUrl && (
-             <div className="mb-2.5 -mx-4 -mt-3 rounded-t-[20px] overflow-hidden">
-                <img src={message.attachmentUrl} alt="Hinge attachment" className="w-full h-auto max-h-[400px] object-contain" />
-             </div>
-           )}
+            {message.type === 'image' && message.attachmentUrl && (
+              <div className="mb-2.5 -mx-4 -mt-3 rounded-t-[20px] overflow-hidden">
+                 <img src={message.attachmentUrl} alt="Hinge attachment" className="w-full h-auto max-h-[400px] object-contain" />
+              </div>
+            )}
+            {message.type === 'video' && message.attachmentUrl && (
+              <div className="mb-2.5 -mx-4 -mt-3 rounded-t-[20px] overflow-hidden bg-black/5 flex items-center justify-center">
+                 <video src={message.attachmentUrl} controls className="w-full h-auto max-h-[400px]" />
+              </div>
+            )}
            <p className="whitespace-pre-wrap break-words font-medium">{message.text}</p>
            {isMe && (
               <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm border border-neutral-100">

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Post, Participant, PlatformConfig } from '@/lib/types';
+import { cn } from '@/lib/utils';
 import { ThumbsUp, MessageSquare, Repeat2, Send, MoreHorizontal, Globe, Heart } from 'lucide-react';
 
 interface LinkedInPostProps {
@@ -63,8 +64,11 @@ export const LinkedInPost: React.FC<LinkedInPostProps> = ({ post, author, config
 
       {/* Actions */}
       <div className="flex justify-around items-center py-1 px-2">
-        <button className="flex items-center gap-1.5 p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded transition-colors text-neutral-500 font-semibold text-sm">
-          <ThumbsUp className="w-5 h-5" />
+        <button className={cn(
+          "flex items-center gap-1.5 p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded transition-colors font-semibold text-sm",
+          post.isLiked ? "text-blue-600 dark:text-blue-400" : "text-neutral-500"
+        )}>
+          <ThumbsUp className={cn("w-5 h-5", post.isLiked && "fill-current")} />
           <span>Like</span>
         </button>
         <button className="flex items-center gap-1.5 p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded transition-colors text-neutral-500 font-semibold text-sm">
