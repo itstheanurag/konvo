@@ -9,7 +9,7 @@ import { SidebarPostCompose } from './sidebar-sections/sidebar-post-compose';
 interface SidebarProps {
   participants: Participant[];
   messages: Message[];
-  onAddMessage: (text: string, senderId: string, timestamp?: string) => void;
+  onAddMessage: (text: string, senderId: string, timestamp?: string, type?: "text" | "image" | "video", attachmentUrl?: string) => void;
   mode: ReplicationMode;
   onModeChange: (mode: ReplicationMode) => void;
   post: Post;

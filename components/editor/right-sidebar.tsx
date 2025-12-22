@@ -68,6 +68,7 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
                <SidebarConfiguration 
                   currentPlatform={currentPlatform}
                   onPlatformChange={onPlatformChange}
+                  mode={mode}
                />
 
                {mode === 'post' && (
