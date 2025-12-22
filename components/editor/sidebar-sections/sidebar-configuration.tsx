@@ -5,18 +5,25 @@ import { Settings, Moon, Sun, Monitor } from 'lucide-react';
 import { Label, Select, SectionHeader } from '@/components/ui/design-system';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
-import { PLATFORMS, PlatformType } from '@/lib/types';
+import { PLATFORMS, PlatformType, ReplicationMode } from '@/lib/types';
 
 interface SidebarConfigurationProps {
   currentPlatform: PlatformType;
   onPlatformChange: (p: PlatformType) => void;
+  mode: ReplicationMode;
 }
 
 export const SidebarConfiguration: React.FC<SidebarConfigurationProps> = ({
   currentPlatform,
   onPlatformChange,
+  mode,
 }) => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section>
@@ -27,7 +34,9 @@ export const SidebarConfiguration: React.FC<SidebarConfigurationProps> = ({
           <Select 
             value={currentPlatform}
             onChange={(val) => onPlatformChange(val as PlatformType)}
-            options={Object.values(PLATFORMS).map(p => ({ label: p.name, value: p.id }))}
+            options={Object.values(PLATFORMS)
+              .filter(p => mode === 'post' ? p.supportsPosts : p.supportsChat)
+              .map(p => ({ label: p.name, value: p.id }))}
           />
         </div>
 
@@ -40,7 +49,7 @@ export const SidebarConfiguration: React.FC<SidebarConfigurationProps> = ({
                     onClick={() => setTheme(t)}
                     className={cn(
                       "flex-1 flex items-center justify-center py-1.5 rounded-md transition-all",
-                      theme === t
+                      mounted && theme === t
                         ? "bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 shadow-sm"
                         : "text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-300"
                     )}

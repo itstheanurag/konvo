@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Users, Pencil, Trash2, Plus, X } from 'lucide-react';
+import { Users, Pencil, Trash2, Plus, X, Upload } from 'lucide-react';
 import { Button, SectionHeader, Input } from '@/components/ui/design-system';
 import { Participant } from '@/lib/types';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -20,6 +20,21 @@ export const SidebarParticipants: React.FC<SidebarParticipantsProps> = ({
   onRemoveParticipant,
 }) => {
   const [editingParticipant, setEditingParticipant] = React.useState<Participant | null>(null);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && editingParticipant) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditingParticipant({
+          ...editingParticipant,
+          avatar: reader.result as string
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSaveParticipant = () => {
     if (editingParticipant) {
@@ -113,11 +128,29 @@ export const SidebarParticipants: React.FC<SidebarParticipantsProps> = ({
                   value={editingParticipant.username || ''} 
                   onChange={(e) => setEditingParticipant({...editingParticipant, username: e.target.value})}
                 />
-                <Input 
-                  placeholder="Avatar URL" 
-                  value={editingParticipant.avatar || ''} 
-                  onChange={(e) => setEditingParticipant({...editingParticipant, avatar: e.target.value})}
-                />
+                <div className="flex gap-2">
+                   <Input 
+                     placeholder="Avatar URL" 
+                     value={editingParticipant.avatar || ''} 
+                     onChange={(e) => setEditingParticipant({...editingParticipant, avatar: e.target.value})}
+                     className="flex-1"
+                   />
+                   <Button 
+                     variant="secondary" 
+                     className="px-3" 
+                     onClick={() => fileInputRef.current?.click()}
+                     title="Upload local image"
+                   >
+                     <Upload className="w-4 h-4" />
+                   </Button>
+                   <input 
+                     type="file" 
+                     ref={fileInputRef} 
+                     className="hidden" 
+                     accept="image/*"
+                     onChange={handleFileChange}
+                   />
+                </div>
                 <div className="flex items-center gap-2">
                   <input 
                     type="checkbox" 
