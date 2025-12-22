@@ -13,17 +13,17 @@ interface ChatDisplayProps {
   view: 'phone' | 'desktop';
 }
 
-export const ChatDisplay: React.FC<ChatDisplayProps> = ({ 
+export const ChatDisplay = React.forwardRef<HTMLDivElement, ChatDisplayProps>(({ 
   messages, 
   participants, 
   platformConfig, 
   view 
-}) => {
+}, ref) => {
   const getSender = (id: string) => participants.find(p => p.id === id) || participants[0];
 
   return (
     <PlatformTheme config={platformConfig}>
-      <ChatContainer view={view}>
+      <ChatContainer view={view} ref={ref}>
         <div 
           className="flex flex-col h-full bg-[var(--platform-bg)]"
           style={{ backgroundColor: 'var(--platform-bg)' }}
@@ -73,4 +73,6 @@ export const ChatDisplay: React.FC<ChatDisplayProps> = ({
       </ChatContainer>
     </PlatformTheme>
   );
-};
+});
+
+ChatDisplay.displayName = "ChatDisplay";

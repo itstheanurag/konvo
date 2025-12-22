@@ -7,6 +7,7 @@ import { PlatformTheme } from './platform-theme';
 import { XPost } from '../platforms/x/post';
 import { InstagramPost } from '../platforms/instagram/posts';
 import { LinkedInPost } from '../platforms/linkedIn/post';
+import { PeerlistPost } from '../platforms/peerlist/post';
 
 
 interface PostDisplayProps {
@@ -16,12 +17,12 @@ interface PostDisplayProps {
   view: 'phone' | 'desktop';
 }
 
-export const PostDisplay: React.FC<PostDisplayProps> = ({ 
+export const PostDisplay = React.forwardRef<HTMLDivElement, PostDisplayProps>(({ 
   post, 
   participants, 
   platformConfig, 
   view 
-}) => {
+}, ref) => {
   const author = participants.find(p => p.id === post.authorId) || participants[0];
 
   const renderPost = () => {
@@ -32,6 +33,8 @@ export const PostDisplay: React.FC<PostDisplayProps> = ({
         return <InstagramPost post={post} author={author} config={platformConfig} />;
       case 'linkedin':
         return <LinkedInPost post={post} author={author} config={platformConfig} />;
+      case 'peerlist':
+        return <PeerlistPost post={post} author={author} config={platformConfig} />;
       default:
         return (
           <div className="p-8 text-center text-neutral-500">
@@ -43,7 +46,7 @@ export const PostDisplay: React.FC<PostDisplayProps> = ({
 
   return (
     <PlatformTheme config={platformConfig}>
-      <ChatContainer view={view}>
+      <ChatContainer view={view} ref={ref}>
         <div 
           className="flex flex-col h-full bg-[var(--platform-bg)] overflow-y-auto"
           style={{ backgroundColor: 'var(--platform-bg)' }}
@@ -53,4 +56,6 @@ export const PostDisplay: React.FC<PostDisplayProps> = ({
       </ChatContainer>
     </PlatformTheme>
   );
-};
+});
+
+PostDisplay.displayName = "PostDisplay";
