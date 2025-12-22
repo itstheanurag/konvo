@@ -45,6 +45,11 @@ export interface Post {
     reposts?: number;
     views?: number;
   };
+  isLiked?: boolean;
+  music?: {
+    name: string;
+    artist: string;
+  };
 }
 
 export interface PlatformConfig {
@@ -60,6 +65,7 @@ export interface PlatformConfig {
   showAvatars: boolean;
   showUsernames: boolean;
   supportsPosts?: boolean;
+  supportsChat?: boolean;
 }
 
 export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
@@ -76,6 +82,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     showAvatars: false,
     showUsernames: false,
+    supportsChat: true,
   },
   whatsapp: {
     id: "whatsapp",
@@ -89,6 +96,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
     fontFamily: "Helvetica, Arial, sans-serif",
     showAvatars: false,
     showUsernames: false,
+    supportsChat: true,
   },
   instagram: {
     id: "instagram",
@@ -103,6 +111,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     showAvatars: true,
     showUsernames: true,
+    supportsChat: true,
     supportsPosts: true,
   },
   x: {
@@ -118,6 +127,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       'TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     showAvatars: true,
     showUsernames: true,
+    supportsChat: true,
     supportsPosts: true,
   },
   reddit: {
@@ -132,6 +142,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
     fontFamily: '"IBMPlexSans", Arial, sans-serif',
     showAvatars: true,
     showUsernames: true,
+    supportsChat: true,
   },
   hinge: {
     id: "hinge",
@@ -145,6 +156,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
     fontFamily: "Georgia, serif",
     showAvatars: false,
     showUsernames: false,
+    supportsChat: true,
   },
   discord: {
     id: "discord",
@@ -159,6 +171,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       '"gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
     showAvatars: true,
     showUsernames: true,
+    supportsChat: true,
   },
   tumblr: {
     id: "tumblr",
@@ -172,6 +185,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
     fontFamily: '"Favorit", "Helmet", "Freesans", sans-serif',
     showAvatars: true,
     showUsernames: true,
+    supportsChat: true,
   },
   peerlist: {
     id: "peerlist",
@@ -186,6 +200,8 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     showAvatars: true,
     showUsernames: true,
+    supportsChat: true,
+    supportsPosts: true,
   },
   slack: {
     id: "slack",
@@ -200,6 +216,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       "Lato, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
     showAvatars: true,
     showUsernames: true,
+    supportsChat: true,
   },
   telegram: {
     id: "telegram",
@@ -214,6 +231,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
     showAvatars: false,
     showUsernames: false,
+    supportsChat: true,
   },
   linkedin: {
     id: "linkedin",
@@ -228,6 +246,7 @@ export const PLATFORMS: Record<PlatformType, PlatformConfig> = {
       "-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif",
     showAvatars: true,
     showUsernames: true,
+    supportsChat: true,
     supportsPosts: true,
   },
 };

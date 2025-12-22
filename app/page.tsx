@@ -23,6 +23,20 @@ export default function Home() {
   const [mode, setMode] = React.useState<ReplicationMode>('chat');
   const [messages, setMessages] = React.useState<Message[]>(INITIAL_MESSAGES);
   const [participants, setParticipants] = React.useState<Participant[]>(INITIAL_PARTICIPANTS);
+
+  // Auto-switch platform if it's incompatible with the current mode
+  React.useEffect(() => {
+    const currentPlatformConfig = PLATFORMS[platform];
+    const isCompatible = mode === 'post' ? currentPlatformConfig.supportsPosts : currentPlatformConfig.supportsChat;
+    
+    if (!isCompatible) {
+      // Find the first compatible platform
+      const firstCompatible = Object.values(PLATFORMS).find(p => mode === 'post' ? p.supportsPosts : p.supportsChat);
+      if (firstCompatible) {
+        setPlatform(firstCompatible.id);
+      }
+    }
+  }, [mode, platform]);
   const [post, setPost] = React.useState<Post>({
     id: 'p1',
     authorId: '1',
@@ -38,7 +52,7 @@ export default function Home() {
 
   const chatRef = React.useRef<HTMLDivElement>(null);
 
-  const handleAddMessage = (text: string, senderId: string, timestamp?: string, type: "text" | "image" = 'text', attachmentUrl?: string) => {
+  const handleAddMessage = (text: string, senderId: string, timestamp?: string, type: "text" | "image" | "video" = 'text', attachmentUrl?: string) => {
     const newMessage: Message = {
       id: Math.random().toString(36).substr(2, 9),
       senderId,
