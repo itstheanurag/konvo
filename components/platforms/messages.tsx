@@ -47,7 +47,7 @@ export const MessagesMessage: React.FC<PlatformMessageProps> = ({ message, sende
 
   return (
     <div className={cn(
-      "flex w-full px-3 mb-0.5",
+      "flex w-full px-3 mb-1",
       isMe ? "justify-end" : "justify-start"
     )}>
       <div className={cn(
